@@ -3,9 +3,9 @@ package identitymind
 import "fmt"
 
 // GetCase see https://edoc.identitymind.com/reference#update
-func (i *IdentityMindAPIClient) GetCase(caseID string, params map[string]interface{}) (interface{}, error) {
+func (i *IdentityMindAPIClient) GetCase(caseID string) (interface{}, error) {
 	var resp map[string]interface{}
-	status, err := i.Get(fmt.Sprintf("im/admin/jax/case/%s", caseID), params, &resp)
+	status, err := i.Get(fmt.Sprintf("im/admin/jax/case/%s", caseID), map[string]interface{}{}, &resp)
 	if err != nil {
 		return nil, fmt.Errorf("Failed to create case via identitymind API; status: %d; %s", status, err.Error())
 	}

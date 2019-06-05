@@ -34,6 +34,98 @@ func (i *IdentityMindAPIClient) UpdateMerchant(merchantID string, params map[str
 	return resp, nil
 }
 
+// Merchant KYC
+
+// GetMerchantApplication see https://edoc.identitymind.com/reference#getmerchantkyc
+func (i *IdentityMindAPIClient) GetMerchantApplication(applicationID string) (interface{}, error) {
+	var resp map[string]interface{}
+	status, err := i.Get(fmt.Sprintf("im/account/merchant/%s", applicationID), map[string]interface{}{}, &resp)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to retrieve merchant KYC application via identitymind API; status: %d; %s", status, err.Error())
+	}
+	return resp, nil
+}
+
+// SubmitMerchantApplication see https://edoc.identitymind.com/reference#create
+func (i *IdentityMindAPIClient) SubmitMerchantApplication(params map[string]interface{}) (interface{}, error) {
+	var resp map[string]interface{}
+	status, err := i.Post("im/account/merchant?graphScoreResponse=false", params, &resp)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to upload merchant KYC document via identitymind API; status: %d; %s", status, err.Error())
+	}
+	return resp, nil
+}
+
+// ListMerchantDocuments see https://edoc.identitymind.com/reference#getfilelistforapplication
+func (i *IdentityMindAPIClient) ListMerchantDocuments(applicationID string) (interface{}, error) {
+	var resp map[string]interface{}
+	status, err := i.Get(fmt.Sprintf("im/account/merchant/%s/files", applicationID), map[string]interface{}{}, &resp)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to list merchant KYC documents via identitymind API; status: %d; %s", status, err.Error())
+	}
+	return resp, nil
+}
+
+// DownloadMerchantDocument see https://edoc.identitymind.com/reference#reevaluatemerchant
+func (i *IdentityMindAPIClient) DownloadMerchantDocument(applicationID, documentID string) (interface{}, error) {
+	var resp map[string]interface{}
+	status, err := i.Get(fmt.Sprintf("im/account/merchant/%s/files/%s", applicationID, documentID), map[string]interface{}{}, &resp)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to download merchant KYC document via identitymind API; status: %d; %s", status, err.Error())
+	}
+	return resp, nil
+}
+
+// UploadMerchantDocument see https://edoc.identitymind.com/reference#processfileuploadrequest
+func (i *IdentityMindAPIClient) UploadMerchantDocument(applicationID string, params map[string]interface{}) (interface{}, error) {
+	var resp map[string]interface{}
+	status, err := i.Post(fmt.Sprintf("im/account/merchant/%s/files", applicationID), params, &resp)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to upload merchant merchant KYC document via identitymind API; status: %d; %s", status, err.Error())
+	}
+	return resp, nil
+}
+
+// UploadMerchantDocumentVerificationImage see https://edoc.identitymind.com/reference#processimageuploadrequest
+func (i *IdentityMindAPIClient) UploadMerchantDocumentVerificationImage(applicationID string, params map[string]interface{}) (interface{}, error) {
+	var resp map[string]interface{}
+	status, err := i.Post(fmt.Sprintf("im/account/merchant/%s/dv", applicationID), params, &resp)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to upload merchant merchant KYC document image for verification via identitymind API; status: %d; %s", status, err.Error())
+	}
+	return resp, nil
+}
+
+// ApproveMerchantApplication see https://edoc.identitymind.com/reference#feedback
+func (i *IdentityMindAPIClient) ApproveMerchantApplication(applicationID string, params map[string]interface{}) (interface{}, error) {
+	var resp map[string]interface{}
+	status, err := i.Post(fmt.Sprintf("im/account/merchant/%s/accepted", applicationID), params, &resp)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to approve merchant KYC application via identitymind API; status: %d; %s", status, err.Error())
+	}
+	return resp, nil
+}
+
+// RejectMerchantApplication see https://edoc.identitymind.com/reference#feedback
+func (i *IdentityMindAPIClient) RejectMerchantApplication(applicationID string, params map[string]interface{}) (interface{}, error) {
+	var resp map[string]interface{}
+	status, err := i.Post(fmt.Sprintf("im/account/merchant/%s/rejected", applicationID), params, &resp)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to reject merchant KYC application via identitymind API; status: %d; %s", status, err.Error())
+	}
+	return resp, nil
+}
+
+// ProvideMerchantApplicationResponse see https://edoc.identitymind.com/reference#quizresponse_1
+func (i *IdentityMindAPIClient) ProvideMerchantApplicationResponse(applicationID string, params map[string]interface{}) (interface{}, error) {
+	var resp map[string]interface{}
+	status, err := i.Post(fmt.Sprintf("im/account/merchant/%s/quizresponse", applicationID), params, &resp)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to reject merchant KYC application via identitymind API; status: %d; %s", status, err.Error())
+	}
+	return resp, nil
+}
+
 // Merchant KYB
 
 // RejectMerchantBusinessApplication see https://edoc.identitymind.com/reference#feedback_1

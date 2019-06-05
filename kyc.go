@@ -24,6 +24,16 @@ func (i *IdentityMindAPIClient) SubmitApplication(params map[string]interface{})
 	return resp, nil
 }
 
+// ProvideApplicationResponse see https://edoc.identitymind.com/reference#quizresponse_1
+func (i *IdentityMindAPIClient) ProvideApplicationResponse(applicationID string, params map[string]interface{}) (interface{}, error) {
+	var resp map[string]interface{}
+	status, err := i.Post(fmt.Sprintf("im/account/consumer/%s/quizresponse", applicationID), params, &resp)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to reject merchant KYC application via identitymind API; status: %d; %s", status, err.Error())
+	}
+	return resp, nil
+}
+
 // ListDocuments see https://edoc.identitymind.com/reference#getfilelistforapplication
 func (i *IdentityMindAPIClient) ListDocuments(applicationID string) (interface{}, error) {
 	var resp map[string]interface{}

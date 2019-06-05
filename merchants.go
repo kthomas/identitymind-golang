@@ -128,7 +128,7 @@ func (i *IdentityMindAPIClient) ApproveMerchantBusinessApplication(applicationID
 }
 
 // EvaluateMerchantFraud evaluates a transaction for payment fraud on behalf of a given merchant; see https://edoc.identitymind.com/reference#anti-fraud-1
-func (i *IdentityMindAPIClient) EvaluateMerchantFraud(merchantID, params map[string]interface{}) (interface{}, error) {
+func (i *IdentityMindAPIClient) EvaluateMerchantFraud(merchantID string, params map[string]interface{}) (interface{}, error) {
 	var resp map[string]interface{}
 	params["m"] = merchantID
 	status, err := i.Post(fmt.Sprintf("im/transaction?graphScoreResponse=false"), params, &resp)

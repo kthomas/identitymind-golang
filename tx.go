@@ -21,6 +21,16 @@ func (i *IdentityMindAPIClient) EvaluateFraud(params map[string]interface{}) (in
 	return resp, nil
 }
 
+// ReportFraud reports a fraud event; see https://edoc.identitymind.com/reference#event
+func (i *IdentityMindAPIClient) ReportFraud(params map[string]interface{}) (interface{}, error) {
+	var resp map[string]interface{}
+	status, err := i.Post("im/admin/jax/feg", params, &resp)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to report fraud event via identitymind API; status: %d; %s", status, err.Error())
+	}
+	return resp, nil
+}
+
 // ReportTransaction reports various kinds of transactions including deposits, withdrawals and internal transfer
 func (i *IdentityMindAPIClient) ReportTransaction(txType string, params map[string]interface{}) (interface{}, error) {
 	if txType != IdentityMindTxTypeDeposit && txType != IdentityMindTxTypeWithdrawal && txType != IdentityMindTxTypeTransfer {

@@ -34,8 +34,8 @@ func (i *IdentityMindAPIClient) ProvideApplicationResponse(applicationID string,
 	return resp, nil
 }
 
-// ListDocuments see https://edoc.identitymind.com/reference#getfilelistforapplication
-func (i *IdentityMindAPIClient) ListDocuments(applicationID string) (interface{}, error) {
+// ListApplicationDocuments see https://edoc.identitymind.com/reference#getfilelistforapplication
+func (i *IdentityMindAPIClient) ListApplicationDocuments(applicationID string) (interface{}, error) {
 	var resp map[string]interface{}
 	status, err := i.Get(fmt.Sprintf("im/account/consumer/%s/files", applicationID), map[string]interface{}{}, &resp)
 	if err != nil {
@@ -44,8 +44,8 @@ func (i *IdentityMindAPIClient) ListDocuments(applicationID string) (interface{}
 	return resp, nil
 }
 
-// DownloadDocument see https://edoc.identitymind.com/reference#reevaluatemerchant
-func (i *IdentityMindAPIClient) DownloadDocument(applicationID, documentID string) (interface{}, error) {
+// DownloadApplicationDocument see https://edoc.identitymind.com/reference#reevaluatemerchant
+func (i *IdentityMindAPIClient) DownloadApplicationDocument(applicationID, documentID string) (interface{}, error) {
 	var resp map[string]interface{}
 	status, err := i.Get(fmt.Sprintf("im/account/consumer/%s/files/%s", applicationID, documentID), map[string]interface{}{}, &resp)
 	if err != nil {
@@ -54,8 +54,8 @@ func (i *IdentityMindAPIClient) DownloadDocument(applicationID, documentID strin
 	return resp, nil
 }
 
-// UploadDocument see https://edoc.identitymind.com/reference#processfileuploadrequest
-func (i *IdentityMindAPIClient) UploadDocument(applicationID string, params map[string]interface{}) (interface{}, error) {
+// UploadApplicationDocument see https://edoc.identitymind.com/reference#processfileuploadrequest
+func (i *IdentityMindAPIClient) UploadApplicationDocument(applicationID string, params map[string]interface{}) (interface{}, error) {
 	var resp map[string]interface{}
 	status, err := i.Post(fmt.Sprintf("im/account/consumer/%s/files", applicationID), params, &resp)
 	if err != nil {
@@ -64,8 +64,8 @@ func (i *IdentityMindAPIClient) UploadDocument(applicationID string, params map[
 	return resp, nil
 }
 
-// UploadDocumentVerificationImage see https://edoc.identitymind.com/reference#processimageuploadrequest
-func (i *IdentityMindAPIClient) UploadDocumentVerificationImage(applicationID string, params map[string]interface{}) (interface{}, error) {
+// UploadApplicationDocumentVerificationImage see https://edoc.identitymind.com/reference#processimageuploadrequest
+func (i *IdentityMindAPIClient) UploadApplicationDocumentVerificationImage(applicationID string, params map[string]interface{}) (interface{}, error) {
 	var resp map[string]interface{}
 	status, err := i.Post(fmt.Sprintf("im/account/consumer/%s/dv", applicationID), params, &resp)
 	if err != nil {

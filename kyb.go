@@ -34,8 +34,8 @@ func (i *IdentityMindAPIClient) SubmitBusinessApplication(params map[string]inte
 	return resp, nil
 }
 
-// ListBusinessDocuments see https://edoc.identitymind.com/reference#getfilelistforapplicationformerchant
-func (i *IdentityMindAPIClient) ListBusinessDocuments(applicationID string) (interface{}, error) {
+// ListBusinessApplicationDocuments see https://edoc.identitymind.com/reference#getfilelistforapplicationformerchant
+func (i *IdentityMindAPIClient) ListBusinessApplicationDocuments(applicationID string) (interface{}, error) {
 	var resp map[string]interface{}
 	status, err := i.Get(fmt.Sprintf("im/account/merchant/%s/files", applicationID), map[string]interface{}{}, &resp)
 	if err != nil {
@@ -44,8 +44,8 @@ func (i *IdentityMindAPIClient) ListBusinessDocuments(applicationID string) (int
 	return resp, nil
 }
 
-// DownloadBusinessDocument see https://edoc.identitymind.com/reference#reevaluatemerchant
-func (i *IdentityMindAPIClient) DownloadBusinessDocument(applicationID, documentID string) (interface{}, error) {
+// DownloadBusinessApplicationDocument see https://edoc.identitymind.com/reference#reevaluatemerchant
+func (i *IdentityMindAPIClient) DownloadBusinessApplicationDocument(applicationID, documentID string) (interface{}, error) {
 	var resp map[string]interface{}
 	status, err := i.Get(fmt.Sprintf("im/account/consumer/%s/files/%s", applicationID, documentID), map[string]interface{}{}, &resp)
 	if err != nil {
@@ -54,8 +54,8 @@ func (i *IdentityMindAPIClient) DownloadBusinessDocument(applicationID, document
 	return resp, nil
 }
 
-// UploadBusinessDocument see https://edoc.identitymind.com/reference#processfileuploadrequestformerchantkyc
-func (i *IdentityMindAPIClient) UploadBusinessDocument(applicationID string, params map[string]interface{}) (interface{}, error) {
+// UploadBusinessApplicationDocument see https://edoc.identitymind.com/reference#processfileuploadrequestformerchantkyc
+func (i *IdentityMindAPIClient) UploadBusinessApplicationDocument(applicationID string, params map[string]interface{}) (interface{}, error) {
 	var resp map[string]interface{}
 	status, err := i.Post(fmt.Sprintf("im/account/merchant/%s/files", applicationID), params, &resp)
 	if err != nil {
@@ -64,8 +64,8 @@ func (i *IdentityMindAPIClient) UploadBusinessDocument(applicationID string, par
 	return resp, nil
 }
 
-// UploadBusinessDocumentVerificationImage see https://edoc.identitymind.com/reference#processfileuploadrequestformerchantkyc
-func (i *IdentityMindAPIClient) UploadBusinessDocumentVerificationImage(applicationID string, params map[string]interface{}) (interface{}, error) {
+// UploadBusinessApplicationDocumentVerificationImage see https://edoc.identitymind.com/reference#processfileuploadrequestformerchantkyc
+func (i *IdentityMindAPIClient) UploadBusinessApplicationDocumentVerificationImage(applicationID string, params map[string]interface{}) (interface{}, error) {
 	var resp map[string]interface{}
 	status, err := i.Post(fmt.Sprintf("im/account/merchant/%s/dv", applicationID), params, &resp)
 	if err != nil {

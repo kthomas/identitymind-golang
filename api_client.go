@@ -57,7 +57,7 @@ func (i *IdentityMindAPIClient) sendRequest(method, urlString, contentType strin
 	mthd := strings.ToUpper(method)
 	reqURL, err := url.Parse(urlString)
 	if err != nil {
-		log.Warningf("Failed to parse URL for uphold API (%s %s) invocation; %s", method, urlString, err.Error())
+		log.Warningf("Failed to parse URL for identitymind API (%s %s) invocation; %s", method, urlString, err.Error())
 		return -1, err
 	}
 
@@ -89,7 +89,7 @@ func (i *IdentityMindAPIClient) sendRequest(method, urlString, contentType strin
 		if contentType == "application/json" {
 			payload, err = json.Marshal(params)
 			if err != nil {
-				log.Warningf("Failed to marshal JSON payload for uphold API (%s %s) invocation; %s", method, urlString, err.Error())
+				log.Warningf("Failed to marshal JSON payload for identitymind API (%s %s) invocation; %s", method, urlString, err.Error())
 				return -1, err
 			}
 		} else if contentType == "application/x-www-form-urlencoded" {
@@ -146,11 +146,11 @@ func (i *IdentityMindAPIClient) sendRequest(method, urlString, contentType strin
 		defer resp.Body.Close()
 	}
 	if err != nil {
-		log.Warningf("Failed to invoke uphold API (%s %s) method: %s; %s", method, urlString, err.Error())
+		log.Warningf("Failed to invoke identitymind API (%s %s) method: %s; %s", method, urlString, err.Error())
 		return 0, err
 	}
 
-	log.Debugf("Received %v response for uphold API (%s %s) invocation", resp.StatusCode, method, urlString)
+	log.Debugf("Received %v response for identitymind API (%s %s) invocation", resp.StatusCode, method, urlString)
 
 	var reader io.ReadCloser
 	switch resp.Header.Get("Content-Encoding") {
@@ -165,10 +165,10 @@ func (i *IdentityMindAPIClient) sendRequest(method, urlString, contentType strin
 	buf.ReadFrom(reader)
 	err = json.Unmarshal(buf.Bytes(), &response)
 	if err != nil {
-		return resp.StatusCode, fmt.Errorf("Failed to unmarshal uphold API (%s %s) response: %s; %s", method, urlString, buf.Bytes(), err.Error())
+		return resp.StatusCode, fmt.Errorf("Failed to unmarshal identitymind API (%s %s) response: %s; %s", method, urlString, buf.Bytes(), err.Error())
 	}
 
-	log.Debugf("Invocation of uphold API (%s %s) succeeded (%v-byte response)", method, urlString, buf.Len())
+	log.Debugf("Invocation of identitymind API (%s %s) succeeded (%v-byte response)", method, urlString, buf.Len())
 	return resp.StatusCode, nil
 }
 

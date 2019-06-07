@@ -79,7 +79,7 @@ func (i *IdentityMindAPIClient) DownloadMerchantApplicationDocument(applicationI
 // UploadMerchantApplicationDocument see https://edoc.identitymind.com/reference#processfileuploadrequest
 func (i *IdentityMindAPIClient) UploadMerchantApplicationDocument(applicationID string, params map[string]interface{}) (interface{}, error) {
 	var resp map[string]interface{}
-	status, err := i.Post(fmt.Sprintf("im/account/merchant/%s/files", applicationID), params, &resp)
+	status, err := i.PostMultipartFormData(fmt.Sprintf("im/account/merchant/%s/files", applicationID), params, &resp)
 	if err != nil {
 		return nil, fmt.Errorf("Failed to upload merchant merchant KYC document via identitymind API; status: %d; %s", status, err.Error())
 	}
@@ -89,7 +89,7 @@ func (i *IdentityMindAPIClient) UploadMerchantApplicationDocument(applicationID 
 // UploadMerchantApplicationDocumentVerificationImage see https://edoc.identitymind.com/reference#processimageuploadrequest
 func (i *IdentityMindAPIClient) UploadMerchantApplicationDocumentVerificationImage(applicationID string, params map[string]interface{}) (interface{}, error) {
 	var resp map[string]interface{}
-	status, err := i.Post(fmt.Sprintf("im/account/merchant/%s/dv", applicationID), params, &resp)
+	status, err := i.PostMultipartFormData(fmt.Sprintf("im/account/merchant/%s/dv", applicationID), params, &resp)
 	if err != nil {
 		return nil, fmt.Errorf("Failed to upload merchant merchant KYC document image for verification via identitymind API; status: %d; %s", status, err.Error())
 	}
@@ -192,7 +192,7 @@ func (i *IdentityMindAPIClient) DownloadMerchantBusinessApplicationDocument(appl
 // UploadMerchantBusinessApplicationDocument see https://edoc.identitymind.com/reference#processfileuploadrequestformerchantkyc
 func (i *IdentityMindAPIClient) UploadMerchantBusinessApplicationDocument(applicationID string, params map[string]interface{}) (interface{}, error) {
 	var resp map[string]interface{}
-	status, err := i.Post(fmt.Sprintf("im/account/merchant/%s/files", applicationID), params, &resp)
+	status, err := i.PostMultipartFormData(fmt.Sprintf("im/account/merchant/%s/files", applicationID), params, &resp)
 	if err != nil {
 		return nil, fmt.Errorf("Failed to upload merchant KYB document via identitymind API; status: %d; %s", status, err.Error())
 	}
@@ -202,7 +202,7 @@ func (i *IdentityMindAPIClient) UploadMerchantBusinessApplicationDocument(applic
 // UploadMerchantBusinessApplicationDocumentVerificationImage see https://edoc.identitymind.com/reference#processfileuploadrequestformerchantkyc
 func (i *IdentityMindAPIClient) UploadMerchantBusinessApplicationDocumentVerificationImage(applicationID string, params map[string]interface{}) (interface{}, error) {
 	var resp map[string]interface{}
-	status, err := i.Post(fmt.Sprintf("im/account/merchant/%s/dv", applicationID), params, &resp)
+	status, err := i.PostMultipartFormData(fmt.Sprintf("im/account/merchant/%s/dv", applicationID), params, &resp)
 	if err != nil {
 		return nil, fmt.Errorf("Failed to upload KYB document image for verification via identitymind API; status: %d; %s", status, err.Error())
 	}

@@ -57,7 +57,7 @@ func (i *IdentityMindAPIClient) DownloadBusinessApplicationDocument(applicationI
 // UploadBusinessApplicationDocument see https://edoc.identitymind.com/reference#processfileuploadrequestformerchantkyc
 func (i *IdentityMindAPIClient) UploadBusinessApplicationDocument(applicationID string, params map[string]interface{}) (interface{}, error) {
 	var resp map[string]interface{}
-	status, err := i.Post(fmt.Sprintf("im/account/merchant/%s/files", applicationID), params, &resp)
+	status, err := i.PostMultipartFormData(fmt.Sprintf("im/account/merchant/%s/files", applicationID), params, &resp)
 	if err != nil {
 		return nil, fmt.Errorf("Failed to upload KYB document via identitymind API; status: %d; %s", status, err.Error())
 	}
@@ -67,7 +67,7 @@ func (i *IdentityMindAPIClient) UploadBusinessApplicationDocument(applicationID 
 // UploadBusinessApplicationDocumentVerificationImage see https://edoc.identitymind.com/reference#processfileuploadrequestformerchantkyc
 func (i *IdentityMindAPIClient) UploadBusinessApplicationDocumentVerificationImage(applicationID string, params map[string]interface{}) (interface{}, error) {
 	var resp map[string]interface{}
-	status, err := i.Post(fmt.Sprintf("im/account/merchant/%s/dv", applicationID), params, &resp)
+	status, err := i.PostMultipartFormData(fmt.Sprintf("im/account/merchant/%s/dv", applicationID), params, &resp)
 	if err != nil {
 		return nil, fmt.Errorf("Failed to upload KYB document image for verification via identitymind API; status: %d; %s", status, err.Error())
 	}

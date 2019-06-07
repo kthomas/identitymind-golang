@@ -57,7 +57,7 @@ func (i *IdentityMindAPIClient) DownloadApplicationDocument(applicationID, docum
 // UploadApplicationDocument see https://edoc.identitymind.com/reference#processfileuploadrequest
 func (i *IdentityMindAPIClient) UploadApplicationDocument(applicationID string, params map[string]interface{}) (interface{}, error) {
 	var resp map[string]interface{}
-	status, err := i.Post(fmt.Sprintf("im/account/consumer/%s/files", applicationID), params, &resp)
+	status, err := i.PostMultipartFormData(fmt.Sprintf("im/account/consumer/%s/files", applicationID), params, &resp)
 	if err != nil {
 		return nil, fmt.Errorf("Failed to upload consumer KYC document via identitymind API; status: %d; %s", status, err.Error())
 	}
@@ -67,7 +67,7 @@ func (i *IdentityMindAPIClient) UploadApplicationDocument(applicationID string, 
 // UploadApplicationDocumentVerificationImage see https://edoc.identitymind.com/reference#processimageuploadrequest
 func (i *IdentityMindAPIClient) UploadApplicationDocumentVerificationImage(applicationID string, params map[string]interface{}) (interface{}, error) {
 	var resp map[string]interface{}
-	status, err := i.Post(fmt.Sprintf("im/account/consumer/%s/dv", applicationID), params, &resp)
+	status, err := i.PostMultipartFormData(fmt.Sprintf("im/account/consumer/%s/dv", applicationID), params, &resp)
 	if err != nil {
 		return nil, fmt.Errorf("Failed to upload consumer KYC document image for verification via identitymind API; status: %d; %s", status, err.Error())
 	}

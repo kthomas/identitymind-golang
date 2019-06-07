@@ -7,10 +7,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"mime/multipart"
 	"net/http"
 	"net/url"
 	"strings"
 	"time"
+
+	"github.com/vincent-petithory/dataurl"
 )
 
 const defaultContentType = "application/json"
@@ -99,6 +102,32 @@ func (i *IdentityMindAPIClient) sendRequest(method, urlString, contentType strin
 				}
 			}
 			payload = []byte(urlEncodedForm.Encode())
+		} else if contentType == "multipart/form-data" {
+			body := new(bytes.Buffer)
+			writer := multipart.NewWriter(body)
+			for key, val := range params {
+				if valStr, valStrOk := val.(string); valStrOk {
+					dURL, err := dataurl.DecodeString(valStr)
+					if err == nil {
+						log.Debugf("Parsed data url parameter: %s", key)
+						part, err := writer.CreateFormFile(key, key)
+						if err != nil {
+							return 0, err
+						}
+						part.Write(dURL.Data)
+					} else {
+						_ = writer.WriteField(key, valStr)
+					}
+				} else {
+					log.Warningf("Skipping non-string value when constructing multipart/form-data request: %s", key)
+				}
+			}
+			err = writer.Close()
+			if err != nil {
+				return 0, err
+			}
+
+			payload = []byte(body.Bytes())
 		}
 
 		req, _ = http.NewRequest(method, urlString, bytes.NewReader(payload))
@@ -159,6 +188,12 @@ func (i *IdentityMindAPIClient) Post(uri string, params map[string]interface{}, 
 func (i *IdentityMindAPIClient) PostWWWFormURLEncoded(uri string, params map[string]interface{}, response interface{}) (status int, err error) {
 	url := i.buildURL(uri)
 	return i.sendRequest("POST", url, "application/x-www-form-urlencoded", params, response)
+}
+
+// PostMultipartFormData constructs and synchronously sends an API POST request using multipart/form-data as the content-type
+func (i *IdentityMindAPIClient) PostMultipartFormData(uri string, params map[string]interface{}, response interface{}) (status int, err error) {
+	url := i.buildURL(uri)
+	return i.sendRequest("POST", url, "multipart/form-data", params, response)
 }
 
 // Put constructs and synchronously sends an API PUT request

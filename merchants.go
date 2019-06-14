@@ -116,6 +116,16 @@ func (i *IdentityMindAPIClient) RejectMerchantApplication(applicationID string, 
 	return resp, nil
 }
 
+// UndecideMerchantApplication see https://edoc.identitymind.com/reference#feedback
+func (i *IdentityMindAPIClient) UndecideMerchantApplication(applicationID string, params map[string]interface{}) (interface{}, error) {
+	var resp map[string]interface{}
+	status, err := i.Post(fmt.Sprintf("im/account/merchant/%s/review", applicationID), params, &resp)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to undecide merchant KYC application via identitymind API; status: %d; %s", status, err.Error())
+	}
+	return resp, nil
+}
+
 // ProvideMerchantApplicationResponse see https://edoc.identitymind.com/reference#quizresponse_1
 func (i *IdentityMindAPIClient) ProvideMerchantApplicationResponse(applicationID string, params map[string]interface{}) (interface{}, error) {
 	var resp map[string]interface{}
@@ -134,6 +144,16 @@ func (i *IdentityMindAPIClient) RejectMerchantBusinessApplication(applicationID 
 	status, err := i.Post(fmt.Sprintf("im/account/merchant/%s/rejected", applicationID), params, &resp)
 	if err != nil {
 		return nil, fmt.Errorf("Failed to reject merchant KYB application via identitymind API; status: %d; %s", status, err.Error())
+	}
+	return resp, nil
+}
+
+// UndecideMerchantBusinessApplication see https://edoc.identitymind.com/reference#feedback_1
+func (i *IdentityMindAPIClient) UndecideMerchantBusinessApplication(applicationID string, params map[string]interface{}) (interface{}, error) {
+	var resp map[string]interface{}
+	status, err := i.Post(fmt.Sprintf("im/account/merchant/%s/review", applicationID), params, &resp)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to undecide merchant KYB application via identitymind API; status: %d; %s", status, err.Error())
 	}
 	return resp, nil
 }

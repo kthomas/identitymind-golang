@@ -93,3 +93,13 @@ func (i *IdentityMindAPIClient) RejectBusinessApplication(applicationID string, 
 	}
 	return resp, nil
 }
+
+// UndecideBusinessApplication see https://edoc.identitymind.com/reference#feedback_1
+func (i *IdentityMindAPIClient) UndecideBusinessApplication(applicationID string, params map[string]interface{}) (interface{}, error) {
+	var resp map[string]interface{}
+	status, err := i.Post(fmt.Sprintf("im/account/merchant/%s/review", applicationID), params, &resp)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to undecide KYB application via identitymind API; status: %d; %s", status, err.Error())
+	}
+	return resp, nil
+}

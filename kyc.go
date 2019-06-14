@@ -93,3 +93,13 @@ func (i *IdentityMindAPIClient) RejectApplication(applicationID string, params m
 	}
 	return resp, nil
 }
+
+// UndecideApplication see https://edoc.identitymind.com/reference#feedback
+func (i *IdentityMindAPIClient) UndecideApplication(applicationID string, params map[string]interface{}) (interface{}, error) {
+	var resp map[string]interface{}
+	status, err := i.Post(fmt.Sprintf("im/account/consumer/%s/review", applicationID), params, &resp)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to undecide KYC application via identitymind API; status: %d; %s", status, err.Error())
+	}
+	return resp, nil
+}

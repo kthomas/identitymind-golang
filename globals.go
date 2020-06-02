@@ -25,7 +25,12 @@ func init() {
 		if lvl == "" {
 			lvl = "INFO"
 		}
-		log = logger.NewLogger("identitymind", lvl, true)
+		var endpoint *string
+		if os.Getenv("SYSLOG_ENDPOINT") != "" {
+			endpt := os.Getenv("SYSLOG_ENDPOINT")
+			endpoint = &endpt
+		}
+		log = logger.NewLogger("identitymind", lvl, endpoint)
 
 		if os.Getenv("IDENTITYMIND_API_ENVIRONMENT") != "" {
 			identitymindAPIBaseURL = fmt.Sprintf("https://%s.identitymind.com", os.Getenv("IDENTITYMIND_API_ENVIRONMENT"))
